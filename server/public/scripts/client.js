@@ -129,7 +129,7 @@ function deleteTask (){
     const taskId = $(this).data('id');
     console.log('Deleting Task', taskId);
 
-    //add in sweetAlert, .ifConfirmed, then proceed
+    //adding in SweetAlert for confirmation before deletion
     swal({
         title: "Are you sure you want to delete this task?",
         icon: 'warning',
