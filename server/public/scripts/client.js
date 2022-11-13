@@ -13,8 +13,11 @@ $( document ).ready( function(){
 
 function setupClickListeners() {
     $('#viewTasks').on('click', '.priorityButton', markPriority);
+    $('#viewTasks').on('click', '.highPriority', markPriority);
     $('#viewTasks').on('click', '.doneButton', completeTask);
+    $('#viewTasks').on('click', '.completeButton', completeTask);
     $('#viewTasks').on('click', '.deleteButton', deleteTask);
+    $('#inputFilter').on('keyup', getFilteredTask)
     $( '#addButton' ).on( 'click', function(){
     console.log( 'in addButton on click' );
 
@@ -27,9 +30,6 @@ function setupClickListeners() {
     // call saveTask with the new object
     saveTask( taskToSend );
 }); 
-
-  //click listener for filter field
-    $('#inputFilter').on('keyup', getFilteredTask);
 }
 
 function getTasks(){
@@ -89,10 +89,9 @@ function markPriority () {
     const id = $(this).data('id');
     const priorityStatus = $(this).data('priority');
 
-
     $.ajax({
         method: 'PUT',
-        url: '/tasks/' + id,
+        url: '/tasks/priority/' + id,
         data: {
         priority: priorityStatus
         }
@@ -202,13 +201,11 @@ function renderTable (tasks) {
         $('#viewTasks').append(`
         <tr class = "${(task.complete) === true ? 'cross-out' : 'cross-in'}">
             <td>${task.name}</td>
-            <td>${task.priority}</td>
             <td>
-            <button class="priorityButton" data-id="${task.id}" data-priority="${task.priority}">${buttonStatus[task.priority]}</button>
+            <button class="${(task.priority) === true ? 'highPriority' : 'priorityButton'}" data-id="${task.id}" data-priority="${task.priority}">${buttonStatus[task.priority]}</button>
             </td>
-            <td>${task.complete}</td>
             <td>
-            <button class="doneButton" data-id="${task.id}" data-complete="${task.complete}">${doneStatus[task.complete]}</button>
+            <button class="${(task.complete) === true ? 'completeButton' : 'doneButton'}" data-id="${task.id}" data-complete="${task.complete}">${doneStatus[task.complete]}</button>
             <td id = "dateComplete"></td>
             <td>
             <button class="deleteButton" data-id="${task.id}">Delete</button>

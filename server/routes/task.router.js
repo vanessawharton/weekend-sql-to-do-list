@@ -53,7 +53,7 @@ taskRouter.post('/',  (req, res) => {
 });
 
 // PUT to change priority
-taskRouter.put('/:id', (req, res) => {
+taskRouter.put('/priority/:id', (req, res) => {
     let taskId = req.params.id;
 
     let isPriority = req.body.priority
@@ -69,9 +69,9 @@ taskRouter.put('/:id', (req, res) => {
 
     pool.query(queryText, [param, taskId]).then (() => {
         res.sendStatus(200);
-    }).catch((error) => {
+    }).catch(error => {
         alert('error updating status to ready to move', error);
-        res.sendStatus(500)
+        res.sendStatus(500);
     });
 });
 
