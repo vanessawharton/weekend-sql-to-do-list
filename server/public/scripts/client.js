@@ -122,8 +122,15 @@ function completeTask () {
     .catch(function(error) {
         alert('Uh oh! Error marking complete!', error);
     })
+
+    timeCompleted();
+
 } // end completeTask
 
+function timeCompleted {
+    if ($(this).data('complete') === true)
+        $('#dateComplete').text()
+}
 
 function deleteTask (){
     const taskId = $(this).data('id');
