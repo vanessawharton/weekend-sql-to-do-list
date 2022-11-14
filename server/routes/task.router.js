@@ -60,8 +60,8 @@ taskRouter.post('/',  (req, res) => {
     let newTask = req.body;
     console.log(`Adding task`, newTask);
 
-    let queryText = `INSERT INTO "tasks" ("name", "date", "priority") VALUES ($1, $2, $3)`;
-    pool.query(queryText, [newTask.name, newTask.date, newTask.priority])
+    let queryText = `INSERT INTO "tasks" ("name", "priority") VALUES ($1, $2)`;
+    pool.query(queryText, [newTask.name, newTask.priority])
         .then(result => {
             res.sendStatus(201);
         })
