@@ -5,13 +5,32 @@ const taskRouter = express.Router();
 // DB CONNECTION
 const pg = require('pg');
 const Pool = pg.Pool;
-const pool = new Pool({
-    database: 'weekend-to-do-app', // name of database
-    host: 'localhost', // database server
-    port: 5432, // Postgres default
-    max: 10, // max queries at once
-    idleTimeoutMillis: 30000 // 30 seconds to try to connect before cancelling query
-});
+let pool;
+if (process.env.DATABASE_URL) {
+    pool = new pg.Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+}
+else {
+    pool = new pg.Pool({
+        host: 'localhost',
+        port: 5432,
+        database: 'weekend-to-do-app',
+        max: 10,
+        idleTimeoutMillis: 30000
+    });
+}
+
+// const pool = new Pool({
+//     database: 'weekend-to-do-app', // name of database
+//     host: 'localhost', // database server
+//     port: 5432, // Postgres default
+//     max: 10, // max queries at once
+//     idleTimeoutMillis: 30000 // 30 seconds to try to connect before cancelling query
+// });
 
 // not required, but useful for debugging:
 pool.on('connect', () => {
